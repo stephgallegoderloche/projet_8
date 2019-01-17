@@ -62,6 +62,22 @@ describe('controller', function () {
 		// TODO: write test
 	});
 
+	describe('loging', function () {
+		it('should not log message', function () {
+			spyOn(console, "log");
+			subject.log("salut");
+			expect(console.log).not.toHaveBeenCalled();
+		});
+
+		it('should log message', function () {
+			spyOn(console, "log");
+			subject.setDebug(true);
+			subject.log("salut");
+			expect(console.log).toHaveBeenCalled();
+		});
+	});
+	
+
 	describe('routing', function () {
 
 		it('should show all entries without a route', function () {
@@ -193,7 +209,13 @@ describe('controller', function () {
 
 	describe('element removal', function () {
 		it('should remove an entry from the model', function () {
-			// TODO: write test
+			var todo = { id: 42, title: 'my todo', completed: true };
+			setUpModel([todo]);
+
+			subject.setView('');
+			view.trigger('itemRemove', { id: 42 });
+
+			expect(model.remove).toHaveBeenCalledWith(42, jasmine.any(Function));
 		});
 
 		it('should remove an entry from the view', function () {
