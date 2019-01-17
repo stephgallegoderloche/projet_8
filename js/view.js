@@ -9,7 +9,7 @@
 	     *
 	     *   - bind(eventName, handler)
 	     *     Takes a todo application event and registers the handler
-	     *   - render(command, parameterObject)
+	     *   - command, parameterObject)
 	     *     Renders the given command with the options
 	     */
 	function View(template) {
@@ -93,6 +93,7 @@
 	};
 
 	View.prototype.render = function (viewCmd, parameter) {
+		// TODO: amélioration a prévoir (transformer les viewCommands en méthode)
 		var self = this;
 		var viewCommands = {
 			showEntries: function () {

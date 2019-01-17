@@ -12,6 +12,7 @@
 		var self = this;
 		self.model = model;
 		self.view = view;
+		self.debug = false;
 
 		self.view.bind('newTodo', function (title) {
 			self.addItem(title);
@@ -45,6 +46,27 @@
 			self.toggleAll(status.completed);
 		});
 	}
+
+	/**
+	 * Set debug level
+	 *
+	 * @param {boolean} 
+	 */
+	Controller.prototype.setDebug = function (debug) {
+		/*force à un vrai boolean */
+		this.debug = !!debug;
+	};
+
+	/**
+	 * Log message
+	 *
+	 * @param {string} message
+	 */
+	Controller.prototype.log = function () {
+		if (this.debug) {
+			console.log.apply(console, arguments);
+		}
+	};
 
 	/**
 	 * Loads and initialises the view
@@ -162,11 +184,13 @@
 			items = data;
 		});
 
-		items.forEach(function(item) {
-			if (item.id === id) {
-				console.log("Element with ID: " + id + " has been removed.");
-			}
-		});
+		if (this.debug) {
+			items.forEach(function (item) {
+				if (item.id === id) {
+					this.log("Element with ID: " + id + " has been removed.");
+				}
+			});
+		}
 
 		self.model.remove(id, function () {
 			self.view.render('removeItem', id);
