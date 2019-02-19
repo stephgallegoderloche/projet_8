@@ -15,11 +15,19 @@
 		this.controller = new app.Controller(this.model, this.view);
 	}
 
+	/**
+	 * Sets a new todo
+	 */
 	var todo = new Todo('todos-vanillajs');
 
+	/**
+	 * Add the route of the page in the url
+	 */
 	function setView() {
 		todo.controller.setView(document.location.hash);
 	}
+
+	
 	$on(window, 'load', setView);
 	$on(window, 'hashchange', setView);
 })();

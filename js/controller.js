@@ -53,7 +53,7 @@
 	 * @param {boolean} 
 	 */
 	Controller.prototype.setDebug = function (debug) {
-		/*force à un vrai boolean */
+		/*a real boolean */
 		this.debug = !!debug;
 	};
 
