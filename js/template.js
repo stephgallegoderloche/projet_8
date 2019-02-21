@@ -26,7 +26,7 @@
 
 	/**
 	 * Sets up defaults for all the Template methods such as a default template
-	 * @constructor
+	 * @constructor template
 	 */
 	function Template() {
 		this.defaultTemplate

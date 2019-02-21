@@ -3,7 +3,7 @@
 
 	/**
 	 * Takes a model and view and acts as the controller between them {@link Model} and {@Link View}
-	 * @constructor
+	 * @constructor controller
 	 * @param {object}(model) The model instance {@link Model}
 	 * @param {object} (view) The view instance {@link View}
 	 */

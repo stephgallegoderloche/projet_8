@@ -4,7 +4,7 @@
 
 	/**
 	 * Sets up a brand new Todo list.
-	 * @constructor
+	 * @constructor app
 	 * @param {string} name The name of your new to do list.
 	 */
 	function Todo(name) {

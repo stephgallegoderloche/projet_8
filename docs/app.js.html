@@ -4,7 +4,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>Source: template.js | Source: template.js</title>
+    <title>Source: app.js | Source: app.js</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -26,7 +26,7 @@
         
     </div>
     <div class="title">
-        <h1><a href="index.html" class="link">Source: template.js</a></h1>
+        <h1><a href="index.html" class="link">Source: app.js</a></h1>
         
     </div>
     <div class="search-container" id="search-container">
@@ -46,116 +46,39 @@
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>/*jshint laxbreak:true */
-(function (window) {
+            <pre class="prettyprint source linenums"><code>/*global app, $on */
+(function () {
 	'use strict';
 
-	var htmlEscapes = {
-		'&amp;': '&amp;amp;',
-		'&lt;': '&amp;lt;',
-		'>': '&amp;gt;',
-		'"': '&amp;quot;',
-		'\'': '&amp;#x27;',
-		'`': '&amp;#x60;'
-	};
-
-	var escapeHtmlChar = function (chr) {
-		return htmlEscapes[chr];
-	};
-
-	var reUnescapedHtml = /[&amp;&lt;>"'`]/g;
-	var reHasUnescapedHtml = new RegExp(reUnescapedHtml.source);
-
-	var escape = function (string) {
-		return (string &amp;&amp; reHasUnescapedHtml.test(string))
-			? string.replace(reUnescapedHtml, escapeHtmlChar)
-			: string;
-	};
-
 	/**
-	 * Sets up defaults for all the Template methods such as a default template
-	 * @constructor template
+	 * Sets up a brand new Todo list.
+	 * @constructor app
+	 * @param {string} name The name of your new to do list.
 	 */
-	function Template() {
-		this.defaultTemplate
-		=	'&lt;li data-id="{{id}}" class="{{completed}}">'
-		+		'&lt;div class="view">'
-		+			'&lt;input class="toggle" type="checkbox" {{checked}}>'
-		+			'&lt;label>{{title}}&lt;/label>'
-		+			'&lt;button class="destroy">&lt;/button>'
-		+		'&lt;/div>'
-		+	'&lt;/li>';
+	function Todo(name) {
+		this.storage = new app.Store(name);
+		this.model = new app.Model(this.storage);
+		this.template = new app.Template();
+		this.view = new app.View(this.template);
+		this.controller = new app.Controller(this.model, this.view);
 	}
 
 	/**
-	 * Creates an &lt;li> HTML string and returns it for placement in your app.
-	 *
-	 * NOTE: In real life you should be using a templating engine such as Mustache
-	 * or Handlebars, however, this is a vanilla JS example.
-	 *
-	 * @param {object} (data) The object containing keys you want to find in the template to replace.
-	 * @returns {string} 	  HTML String of an &lt;li> element
-	 *
-	 * @example
-	 * view.show({
-	 *	id: 1,
-	 *	title: "Hello World",
-	 *	completed: 0,
-	 * });
+	 * Sets a new todo
 	 */
-	Template.prototype.show = function (data) {
-		var i, l;
-		var view = '';
-
-		for (i = 0, l = data.length; i &lt; l; i++) {
-			var template = this.defaultTemplate;
-			var completed = '';
-			var checked = '';
-
-			if (data[i].completed) {
-				completed = 'completed';
-				checked = 'checked';
-			}
-
-			template = template.replace('{{id}}', data[i].id);
-			template = template.replace('{{title}}', escape(data[i].title));
-			template = template.replace('{{completed}}', completed);
-			template = template.replace('{{checked}}', checked);
-
-			view = view + template;
-		}
-
-		return view;
-	};
+	var todo = new Todo('todos-vanillajs');
 
 	/**
-	 * Displays a counter of how many to dos are left to complete
-	 * @param {number} (activeTodos) The number of active todos.
-	 * @returns {string} 			 String containing the count
+	 * Add the route of the page in the url
 	 */
-	Template.prototype.itemCounter = function (activeTodos) {
-		var plural = activeTodos === 1 ? '' : 's';
+	function setView() {
+		todo.controller.setView(document.location.hash);
+	}
 
-		return '&lt;strong>' + activeTodos + '&lt;/strong> item' + plural + ' left';
-	};
-
-	/**
-	 * Updates the text within the "Clear completed" button
-	 * @param  {number} (completedTodos) The number of completed todos.
-	 * @returns {string} 				 String containing the count
-	 */
-	Template.prototype.clearCompletedButton = function (completedTodos) {
-		if (completedTodos > 0) {
-			return 'Clear completed';
-		} else {
-			return '';
-		}
-	};
-
-	// Export to window
-	window.app = window.app || {};
-	window.app.Template = Template;
-})(window);
+	
+	$on(window, 'load', setView);
+	$on(window, 'hashchange', setView);
+})();
 </code></pre>
         </article>
     </section>

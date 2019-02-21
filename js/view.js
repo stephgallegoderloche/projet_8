@@ -11,7 +11,7 @@
 	 *     Takes a todo application event and registers the handler
 	 *   - command, parameterObject)
 	 *     Renders the given command with the options
-	 * @constructor 
+	 * @constructor view
 	 */
 	function View(template) {
 		this.template = template;
